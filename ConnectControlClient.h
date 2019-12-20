@@ -72,7 +72,7 @@ class ConnectControlClient : public Command {
   }
   int execute(vector<string> lexerVector, int index){
     thread openConnectControlClientThread(&ConnectControlClient::runExucteMethosAsThread, this, lexerVector[index + 1], lexerVector[index + 2]);
-    openConnectControlClientThread.join();
+    openConnectControlClientThread.detach();
 
     // returning the number of cells to jump in the array
 

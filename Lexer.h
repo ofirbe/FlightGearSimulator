@@ -9,6 +9,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include "ExpressionHandling.h"
 using namespace std;
 
 class Lexer {
@@ -34,6 +35,22 @@ class Lexer {
       if (!line.empty()) {
         string currentWord = "";
         for (int i = 0; i < line.length(); i++) {
+          ////////////////////////////////////////////////
+          if(line[i]=='"'){
+            currentWord += line[i];
+            i++;
+            while(line[i]!='"'){
+              currentWord += line[i];
+              i++;
+            }
+            currentWord += line[i];
+            inputVector.push_back(currentWord);
+            i++;
+            currentWord="";
+          }
+
+          ////////////////////////////////////////////////
+
 
           if (line[i] == '/' && line[i + 1] == '/') {
             break;
@@ -45,6 +62,36 @@ class Lexer {
                 break;
               }
             }
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            //check if find an Mathematic Expression
+            if (line[i] == '=' || (line[i] == '>'&&line[i-1]!='-') || (line[i] == '<' &&line[i+1]!='-')||line[i] == '!' ){
+              //push the Math Operator
+              currentWord +=line[i];
+              if((line[i] == '>' && line[i+1] == '=' )||(line[i] == '<' && line[i+1] == '=' )||(line[i] == '!'&&line[i+1]=='=')||(line[i] == '='&&line[i+1]=='=')) {
+                currentWord += line[i + 1];
+                i++;
+              }
+              inputVector.push_back(currentWord);
+              i++;
+              currentWord=""; //reset word
+              while (i<line.length()){
+                if(line[i]!=' ') {
+                  currentWord += line[i];
+                }
+                  i++;
+              }
+              if(currentWord!="") {
+                inputVector.push_back(currentWord);
+              }
+              break;
+            }
+
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
             currentWord += line[i];
             //if the last char is part of legal word!
             if ((i + 1) == line.length()) {
@@ -69,6 +116,7 @@ class Lexer {
 
     return inputVector;
   }
+
 
 };
 
