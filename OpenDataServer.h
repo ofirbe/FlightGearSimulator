@@ -12,13 +12,10 @@
 #include <netinet/in.h>
 #include <cstring>
 
-static const char *portNum = "5400";
-
 class OpenDataServer : public Command {
-
  public:
-  int execute(vector<string> lexerVector,int index) {
-    int portNumInInt = atoi(portNum);
+  int runExucteMethosAsThread(string portNum) {
+    int portNumInInt = stoi(portNum);
 
     //create socket
     int socketfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -65,7 +62,6 @@ class OpenDataServer : public Command {
 
     close(socketfd); //closing the listening socket
 
-
     while (true) {
       //reading from client
       char buffer[1024] = {0};
@@ -77,6 +73,11 @@ class OpenDataServer : public Command {
       send(client_socket, hello, strlen(hello), 0);
       std::cout << "Hello message sent\n" << std::endl;
     }
+  }
+
+  int execute(vector<string> lexerVector, int index) {
+    thread openDataServerThread(&OpenDataServer::runExucteMethosAsThread, this, lexerVector[index + 1]);
+    openDataServerThread.join();
 
     // returning the number of cells to jump in the array
     return 2;
