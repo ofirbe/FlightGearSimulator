@@ -7,4 +7,8 @@
 #include "Command.h"
 #endif //EX3__WHILECOMMAND_H_
 class WhileCommand : public Command {
+  int execute(vector<string> lexerVector, int index) {
+    cout<<"Im While"<<endl;
+    return 1;
+  }
 };

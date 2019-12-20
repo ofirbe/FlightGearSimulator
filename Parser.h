@@ -15,6 +15,7 @@
 #include "WhileCommand.h"
 #include "IfCommand.h"
 #include "PrintCommand.h"
+#include "VarCommand.h"
 
 
 class Parser {
@@ -24,11 +25,12 @@ class Parser {
  public:
   Parser() {
     _commandsMap["connectControlClient"] = new ConnectControlClient();
-    _commandsMap["openDataServer"] = new OpenDataServer();
-    _commandsMap["Sleep"] = new SleepCommand();
-    _commandsMap["Print"] = new PrintCommand();
+// //   _commandsMap["openDataServer"] = new OpenDataServer();
+//    _commandsMap["Sleep"] = new SleepCommand();
+//    _commandsMap["Print"] = new PrintCommand();
     _commandsMap["while"] = new WhileCommand();
-    _commandsMap["if"] = new IfCommand();
+//    _commandsMap["if"] = new IfCommand();
+//    _commandsMap["var"] = new VarCommand();
   };
 
   void parse(vector<string> vct) {

@@ -53,7 +53,7 @@ class ConnectControlClient : public Command {
     }
 
     //if here we made a connection
-    char *hello = "set engines/active-engine/auto-start \r\n";
+    char *hello = "set /engines/active-engine/auto-start  0\r\n";
     //char hello[] = "set controls/flight/rudder -1\r\n";
     int is_sent = send(client_socket, hello, strlen(hello), 0);
     if (is_sent == -1) {
