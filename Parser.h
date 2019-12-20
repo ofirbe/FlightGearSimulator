@@ -11,6 +11,11 @@
 #include "ConnectControlClient.h"
 #include "OpenDataServer.h"
 #include <map>
+#include "SleepCommand.h"
+#include "WhileCommand.h"
+#include "IfCommand.h"
+#include "PrintCommand.h"
+
 
 class Parser {
  private:
@@ -20,7 +25,10 @@ class Parser {
   Parser() {
     _commandsMap["connectControlClient"] = new ConnectControlClient();
     _commandsMap["openDataServer"] = new OpenDataServer();
-
+    _commandsMap["Sleep"] = new SleepCommand();
+    _commandsMap["Print"] = new PrintCommand();
+    _commandsMap["while"] = new WhileCommand();
+    _commandsMap["if"] = new IfCommand();
   };
 
   void parse(vector<string> vct) {
