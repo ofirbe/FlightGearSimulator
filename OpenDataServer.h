@@ -77,7 +77,7 @@ class OpenDataServer : public Command {
 
   int execute(vector<string> lexerVector, int index) {
     thread openDataServerThread(&OpenDataServer::runExucteMethosAsThread, this, lexerVector[index + 1]);
-    openDataServerThread.join();
+    openDataServerThread.detach();
 
     // returning the number of cells to jump in the array
     return 2;
