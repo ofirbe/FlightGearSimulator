@@ -5,7 +5,6 @@
 #ifndef EX3__VAR_H_
 #define EX3__VAR_H_
 
-#endif //EX3__VAR_H_
 #include <string>
 #include "ExpressionHandling.h"
 using namespace std;
@@ -21,6 +20,14 @@ class Var : public Expression {
   string simCommand;
 
  public:
+  Var(string n, string newSimCommand, int newVarKind) {
+    name = n;
+    value = 0;
+    varKind = newVarKind;
+    // if we did not fill that field, the default value is "" (empty)
+    simCommand = newSimCommand;
+  }
+
   Var(string n, double val, int newVarKind) {
     name = n;
     value = val;
@@ -66,3 +73,4 @@ class Var : public Expression {
     return *this;
   }
 };
+#endif //EX3__VAR_H_
