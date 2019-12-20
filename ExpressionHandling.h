@@ -104,13 +104,34 @@ class Value : public Expression {
   }
 };
 
-class BooleanExpression : public Expression {
+class BooleanExpression : public BinaryOperator {
  private:
-  bool val;
+  string oper;
  public:
-  BooleanExpression(bool newVal) : val(newVal) {}
+
+  BooleanExpression(Expression *expLeft, Expression *expRight, string newOper) : BinaryOperator(expLeft, expRight) {
+    oper = newOper;
+  }
+
   double calculate() {
-    return val;
+    if (oper == "<") {
+      return expL->calculate() < expR->calculate();
+    }
+    if (oper == ">") {
+      return expL->calculate() > expR->calculate();
+    }
+    if (oper == "<=") {
+      return expL->calculate() <= expR->calculate();
+    }
+    if (oper == ">=") {
+      return expL->calculate() >= expR->calculate();
+    }
+    if (oper == "==") {
+      return expL->calculate() == expR->calculate();
+    }
+    if (oper == "!=") {
+      return expL->calculate() != expR->calculate();
+    }
   }
 };
 
