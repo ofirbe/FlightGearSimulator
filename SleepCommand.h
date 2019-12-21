@@ -6,7 +6,9 @@
 #ifndef EX3__SLEEPCOMMAND_H_
 #define EX3__SLEEPCOMMAND_H_
 
-#endif //EX3__SLEEPCOMMAND_H_
-
 class SleepCommand : public Command {
+ public:
+  int execute(vector<string> lexerVector, int index);
 };
+
+#endif //EX3__SLEEPCOMMAND_H_
