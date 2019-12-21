@@ -11,6 +11,7 @@
 
 class VarCommand : public Command {
   int execute(vector<string> lexerVector, int index);
+  Expression *createExp(string expIsString);
 };
 
 #endif //EX3__VARCOMMAND_H_

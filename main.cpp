@@ -8,10 +8,18 @@ int main() {
   Lexer l;
   vector<string> vct = l.lexerFunc();
 
+//  OpenDataServer o;
+//  o.execute(vct, 1);
+
   Parser parser;
   parser.parse(vct);
 
-  //ConnectControlClient c;
-  //c.execute(vct, 1);
+  for (auto x:varMap) {
+    cout << "name = " + x.first + "  value = ";
+    cout << x.second->calculate() << endl;
+  }
+
+//  ConnectControlClient c;
+//  c.execute(vct, 1);
   return 0;
 }

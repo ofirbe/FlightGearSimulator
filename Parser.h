@@ -4,6 +4,7 @@
 
 #ifndef EX3__PARSER_H_
 #define EX3__PARSER_H_
+
 #include <map>
 #include "Lexer.h"
 #include "Command.h"
@@ -16,12 +17,12 @@
 #include "PrintCommand.h"
 #include "VarCommand.h"
 
-// global map of variables
-map<string, Var *> _varMap;
+// global map of variables - declaration
+extern map<string, Var *> varMap;
 
 class Parser {
  private:
-  map<string, Command *> _commandsMap;
+  map<string, Command *> commandsMap;
 
  public:
   Parser();

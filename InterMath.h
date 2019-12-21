@@ -19,6 +19,7 @@ class InterMath {
   map<const string, Var *> varMap;
   //Expression& interpret(string str);
  public:
+  InterMath() {};
   queue<string> infixToPostfix(string s) {
     stack<string> st;
     queue<string> qu;
@@ -103,10 +104,9 @@ class InterMath {
     }
     return qu;
   }
-  InterMath();
   Expression *interpret(string str) {
     queue<string> qu = infixToPostfix(str);
-    stack<Expression *> st; //stack for expressions.
+    stack < Expression * > st; //stack for expressions.
     while (!qu.empty()) {
       //If Binary Expression
       if ((qu.front() != "@") && (qu.front() != "$")) {
