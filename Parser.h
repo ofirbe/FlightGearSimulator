@@ -19,11 +19,9 @@
 
 // global map of variables - declaration
 extern map<string, Var *> varMap;
+extern map<string, Command *> commandsMap;
 
 class Parser {
- private:
-  map<string, Command *> commandsMap;
-
  public:
   Parser();
   void parse(vector<string> vct);

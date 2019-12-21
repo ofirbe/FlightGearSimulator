@@ -7,9 +7,8 @@
 #include "Command.h"
 
 class WhileCommand : public Command {
-  int execute(vector<string> lexerVector, int index) {
-
-  }
+ public:
+  int execute(vector<string> lexerVector, int index);
 };
 
 

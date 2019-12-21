@@ -14,7 +14,7 @@ Expression *VarCommand::createExp(string expIsString) {
     string numAsString = "";
 
     // if it is a alphabetic char
-    while (isalpha(expIsString[i])) {
+    while (isalpha(expIsString[i]) || isdigit(expIsString[i])) {
       partOfExp += expIsString[i];
       i++;
     }

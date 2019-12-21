@@ -14,9 +14,8 @@ int main() {
   Parser parser;
   parser.parse(vct);
 
-  for (auto x:varMap) {
-    cout << "name = " + x.first + "  value = ";
-    cout << x.second->calculate() << endl;
+  for (auto x:vct) {
+    cout << x << endl;
   }
 
 //  ConnectControlClient c;

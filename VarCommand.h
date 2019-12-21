@@ -10,6 +10,7 @@
 #include "Parser.h"
 
 class VarCommand : public Command {
+ public:
   int execute(vector<string> lexerVector, int index);
   Expression *createExp(string expIsString);
 };

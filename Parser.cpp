@@ -6,14 +6,15 @@
 
 // definition of the global variable
 map<string, Var *> varMap;
+map<string, Command *> commandsMap;
 
 Parser::Parser() {
   commandsMap["connectControlClient"] = new ConnectControlClient();
   commandsMap["openDataServer"] = new OpenDataServer();
-  commandsMap["Sleep"] = new SleepCommand();
-  commandsMap["Print"] = new PrintCommand();
+  //commandsMap["Sleep"] = new SleepCommand();
+  //commandsMap["Print"] = new PrintCommand();
   commandsMap["while"] = new WhileCommand();
-  commandsMap["if"] = new IfCommand();
+  //commandsMap["if"] = new IfCommand();
   commandsMap["var"] = new VarCommand();
 }
 

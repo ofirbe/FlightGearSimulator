@@ -76,7 +76,7 @@ class InterMath {
         }
         if (st.top() == "(") {
           st.pop();
-          if (st.top() != "(") {
+          if (!st.empty() && st.top() != "(") {
             qu.push(st.top());
             st.pop();
           }

@@ -5,6 +5,10 @@
 #ifndef EX3__IFCOMMAND_H_
 #define EX3__IFCOMMAND_H_
 #include "Command.h"
-#endif //EX3__IFCOMMAND_H_
+
 class IfCommand : public Command {
+ public:
+  int execute(vector<string> lexerVector, int index);
 };
+
+#endif //EX3__IFCOMMAND_H_
