@@ -12,8 +12,8 @@ int SleepCommand::execute(vector<string> lexerVector, int index) {
   VarCommand *v = new VarCommand();
   // creating the expression by using the function
   Expression *exp = v->createExp(sleepTime);
-
-  sleep(exp->calculate());
+  //sleep for millisecond (/1000)
+  sleep((exp->calculate())/1000);
 
   return 2;
 }

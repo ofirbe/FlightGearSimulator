@@ -10,6 +10,7 @@ int PrintCommand::execute(vector<string> lexerVector, int index) {
   string strToPrint = lexerVector[index + 1];
   if (strToPrint.front() == '"' && strToPrint.back() == '"') {
     // it is a string (not a var)
+    strToPrint.erase(std::remove(strToPrint.begin(), strToPrint.end(), '"'), strToPrint.end());
     cout << strToPrint << endl;
   } else {
     // it is a var

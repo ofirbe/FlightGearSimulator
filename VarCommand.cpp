@@ -51,9 +51,9 @@ int VarCommand::execute(vector<string> lexerVector, int index) {
     int oper;
     string sim = "";
 
-    if (lexerVector[index + 2] == "->")
+    if (lexerVector[index + 2] == "->") //put var at varMap
       oper = OUT;
-    else if (lexerVector[index + 2] == "<-")
+    else if (lexerVector[index + 2] == "<-") //update var coomand(sim) from the xml map
       oper = IN;
     else
       oper = REGULAR;
@@ -64,10 +64,15 @@ int VarCommand::execute(vector<string> lexerVector, int index) {
 
       // adding the new variable into the map
       varMap[name] = newVar;
-
+      //if oper is <- so find the value at the map that we create from the client data and set it to the var.
+      if (oper == IN) {
+        if (flightDataMap.find(sim) != flightDataMap.end()) {
+          newVar->setValue(flightDataMap.find(sim)->second);
+        }
+      }
       // return how much to jump
       return 5;
-    } else {
+    } else { //
       // what is the name of the var (from the map) we want to move into our new local var?
       string newValueOfVar = lexerVector[index + 3];
 
@@ -83,22 +88,25 @@ int VarCommand::execute(vector<string> lexerVector, int index) {
       return 4;
     }
   } else {
-    // it is an existing var and we want to update it
+    // it is an existing var and we want to update it and use it
     string name = lexerVector[index];
     string newValue = lexerVector[index + 2];
 
     // creating the new exp of the variable by the string we get
     Expression *newExp = createExp(newValue);
 
-    newVar = new Var(name, newExp->calculate(), REGULAR);
-
     if (varMap.find(name) != varMap.end()) {
-      //deleting the current var
-      varMap.erase(varMap.find(name));
+      varMap.find(name)->second->setValue(newExp->calculate());
+      if (varMap.find(name)->second->getVarKind() == 2) { //OUT= push to the queue command+value
+        connectControlQueue.push(
+            varMap.find(name)->second->getSim() + " " + to_string(varMap.find(name)->second->getValue()));
+      }
+    } else {
+      newVar = new Var(name, newExp->calculate(), REGULAR);
+      // adding the new variable into the map
+      varMap[name] = newVar;
+      cout<<"ERROR: Var from txt with operand '=' never found at the map so i create him now"<<endl;
     }
-
-    // adding the new variable into the map
-    varMap[name] = newVar;
 
     // return how much to jump
     return 3;

@@ -43,6 +43,21 @@ class Var : public Expression {
     simCommand = newSimCommand;
   }
 
+  void setValue(double newVal) {
+    this->value = newVal;
+  }
+
+  double getValue() {
+    return this->value;
+  }
+
+  string getSim() {
+    return this->simCommand;
+  }
+  // IN = 1, OUT = 2, REGULAR = 3
+  int getVarKind(){
+    return this->varKind;
+  }
   double calculate() {
     return value;
   }

@@ -14,9 +14,9 @@ int main() {
   Parser parser;
   parser.parse(vct);
 
-  for (auto x:vct) {
-    cout << x << endl;
-  }
+//  for (auto x:vct) {
+//    cout << x << endl;
+//  }
 
 //  ConnectControlClient c;
 //  c.execute(vct, 1);
