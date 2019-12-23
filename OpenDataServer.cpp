@@ -3,7 +3,7 @@
 //
 
 #include "OpenDataServer.h"
-
+int client_socket;
   int OpenDataServer::runExucteMethosAsThread(string portNum) {
     int portNumInInt = stoi(portNum);
     //create socket
@@ -22,7 +22,6 @@
     address.sin_port = htons(portNumInInt);
 
     //we need to convert our number to a number that the network understands
-
     //the actual bind command
     if (bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
       std::cerr << "Could not bind the socket to an IP" << std::endl;
@@ -37,10 +36,8 @@
     } else {
       std::cout << "Server is now listening ..." << std::endl;
     }
-
-
       // accepting a client
-      int client_socket = accept(socketfd, (struct sockaddr *) &address,
+      client_socket = accept(socketfd, (struct sockaddr *) &address,
                                  (socklen_t *) &address);
 
       std::cout << client_socket << std::endl;
@@ -73,7 +70,9 @@
   int OpenDataServer::execute(vector<string> lexerVector, int index) {
     thread openDataServerThread(&OpenDataServer::runExucteMethosAsThread, this, lexerVector[index + 1]);
     openDataServerThread.detach();
-
+    while(!client_socket){
+      std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
     // returning the number of cells to jump in the array
     return 2;
   }
