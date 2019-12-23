@@ -25,7 +25,21 @@ Expression *VarCommand::createExp(string expIsString) {
       string variableSetting = "";
       variableSetting += partOfExp;
       variableSetting += "=";
-      double calc = varMap.find(partOfExp)->second->calculate();
+      double calc = 0;
+
+      if (varMap.find(partOfExp) != varMap.end()) {
+        string simCheck = varMap.find(partOfExp)->second->getSim();
+        if (flightDataMap.find(simCheck) != flightDataMap.end()) {
+          calc = flightDataMap.find(simCheck)->second;
+        } else {
+          cout << "Error finding the value in the Bedui Map :: VAR:  ";
+          cout << flightDataMap.find(simCheck)->first << endl;
+          cout << partOfExp << endl;
+        }
+      } else {
+        calc = varMap.find(partOfExp)->second->calculate();
+      }
+
       string calcInStr = to_string(calc);
       variableSetting += calcInStr;
       inter->setVariables(variableSetting);
@@ -53,21 +67,25 @@ int VarCommand::execute(vector<string> lexerVector, int index) {
 
     if (lexerVector[index + 2] == "->") //put var at varMap
       oper = OUT;
-    else if (lexerVector[index + 2] == "<-") //update var coomand(sim) from the xml map
+    else if (lexerVector[index + 2] == "<-") //update var command(sim) from the xml map
       oper = IN;
     else
       oper = REGULAR;
 
     if (oper != REGULAR) {
       sim = lexerVector[index + 4];
+      // deleting the "" from the sim command
+      sim.erase(std::remove(sim.begin(), sim.end(), '"'), sim.end());
       newVar = new Var(name, sim, oper);
 
       // adding the new variable into the map
       varMap[name] = newVar;
-      //if oper is <- so find the value at the map that we create from the client data and set it to the var.
+
+      //if oper is <- so find the value at the map that we created from the client data and set it to the var.
       if (oper == IN) {
         if (flightDataMap.find(sim) != flightDataMap.end()) {
           newVar->setValue(flightDataMap.find(sim)->second);
+          newVar->setSim(sim);
         }
       }
       // return how much to jump
@@ -76,10 +94,17 @@ int VarCommand::execute(vector<string> lexerVector, int index) {
       // what is the name of the var (from the map) we want to move into our new local var?
       string newValueOfVar = lexerVector[index + 3];
 
+      string newSim;
+      if (varMap.find(newValueOfVar) != varMap.end()) {
+        newSim = varMap.find(newValueOfVar)->second->getSim();
+      }
+
       // creating the new exp of the variable by the string we get
       Expression *newExp = createExp(newValueOfVar);
 
       newVar = new Var(name, newExp->calculate(), REGULAR);
+
+      newVar->setSim(newSim);
 
       // adding the new variable into the map
       varMap[name] = newVar;
@@ -98,14 +123,16 @@ int VarCommand::execute(vector<string> lexerVector, int index) {
     if (varMap.find(name) != varMap.end()) {
       varMap.find(name)->second->setValue(newExp->calculate());
       if (varMap.find(name)->second->getVarKind() == 2) { //OUT= push to the queue command+value
+        string strSim = varMap.find(name)->second->getSim();
+        strSim.erase(std::remove(strSim.begin(), strSim.end(), '"'), strSim.end());
         connectControlQueue.push(
-            varMap.find(name)->second->getSim() + " " + to_string(varMap.find(name)->second->getValue()));
+            strSim + " " + to_string(varMap.find(name)->second->getValue()));
       }
     } else {
       newVar = new Var(name, newExp->calculate(), REGULAR);
       // adding the new variable into the map
       varMap[name] = newVar;
-      cout<<"ERROR: Var from txt with operand '=' never found at the map so i create him now"<<endl;
+      cout << "ERROR: Var from txt with operand '=' never found at the map so i create him now" << endl;
     }
 
     // return how much to jump

@@ -46,14 +46,18 @@ class Var : public Expression {
   void setValue(double newVal) {
     this->value = newVal;
   }
-
-  double getValue() {
-    return this->value;
+  void setSim(string newsim){
+    this->simCommand = newsim;
   }
 
   string getSim() {
     return this->simCommand;
   }
+
+  double getValue() {
+    return this->value;
+  }
+
   // IN = 1, OUT = 2, REGULAR = 3
   int getVarKind(){
     return this->varKind;

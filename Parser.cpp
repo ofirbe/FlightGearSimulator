@@ -10,7 +10,7 @@
 map<string, Var *> varMap;
 map<string, Command *> commandsMap;
 map<string, double> flightDataMap;
-queue <string> connectControlQueue;
+queue<string> connectControlQueue;
 
 Parser::Parser() {
   commandsMap["connectControlClient"] = new ConnectControlClient();
@@ -35,22 +35,44 @@ void Parser::parse(vector<string> vct) {
       Command *command = commandsMap.find("var")->second;
       index += command->execute(vct, index);
     }
+    cout << "Parser index ";
+    cout << index << endl;
   }
+
+
+//  cout << "--------------------------------------" << endl;
+//  cout << "VarMap" << endl;
+//  cout << "--------------------------------------" << endl;
+//  for (auto x:varMap) {
+//    cout << x.first + " ";
+//    cout << x.second->getValue() << endl;
+//  }
+//
+//  cout << "--------------------------------------" << endl;
+//  cout << "FlightMap" << endl;
+//  cout << "--------------------------------------" << endl;
+//  for (auto x:flightDataMap) {
+//    cout << x.first + " ";
+//    cout << x.second << endl;
+//  }
 }
 
 //initialize the map that contain all the flight data that exist at the xml file. (36 values initialize to 0)
 //we will get the value of all the data from the connection to the flight server.
-void Parser::initializeFlightDataMap(){
+void Parser::initializeFlightDataMap() {
   flightDataMap["/instrumentation/airspeed-indicator/indicated-speed-kt"] = 0; //airspeed-indicator line 1
   flightDataMap["/sim/time/warp"] = 0; //time_warp line 2
   flightDataMap["/controls/switches/magnetos"] = 0; //switches_magnetos line 3
-  flightDataMap["//instrumentation/heading-indicator/offset-deg"] = 0; //heading-indicator line 4                ///////there is 2 "/" at the xml. maybe a problem.
+  flightDataMap["/instrumentation/heading-indicator/offset-deg"] =
+      0; //heading-indicator line 4                ///////there is 2 "/" at the xml. maybe a problem.
   flightDataMap["/instrumentation/altimeter/indicated-altitude-ft"] = 0; //altimeter_indicated line 5
   flightDataMap["/instrumentation/altimeter/pressure-alt-ft"] = 0; //altimeter_pressure line 6
   flightDataMap["/instrumentation/attitude-indicator/indicated-pitch-deg"] = 0; //attitude-indicator-pitch line 7
   flightDataMap["/instrumentation/attitude-indicator/indicated-roll-deg"] = 0; //attitude-indicator-roll line 8
-  flightDataMap["/instrumentation/attitude-indicator/internal-pitch-deg"] = 0; //attitude-indicator_internal-pitch lin 9
-  flightDataMap["/instrumentation/attitude-indicator/internal-roll-deg"] = 0; //attitude-indicator_internal-roll line 10
+  flightDataMap["/instrumentation/attitude-indicator/internal-pitch-deg"] =
+      0; //attitude-indicator_internal-pitch lin 9
+  flightDataMap["/instrumentation/attitude-indicator/internal-roll-deg"] =
+      0; //attitude-indicator_internal-roll line 10
   flightDataMap["/instrumentation/encoder/indicated-altitude-ft"] = 0; //encoder_indicated-altitude line 11
   flightDataMap["/instrumentation/encoder/pressure-alt-ft"] = 0; //encoder_pressure line 12
   flightDataMap["/instrumentation/gps/indicated-altitude-ft"] = 0; //gps_indicated-altitude line 13
@@ -60,7 +82,8 @@ void Parser::initializeFlightDataMap(){
   flightDataMap["/instrumentation/magnetic-compass/indicated-heading-deg"] = 0; //magnetic-compass-heading line 17
   flightDataMap["/instrumentation/slip-skid-ball/indicated-slip-skid"] = 0; //slip-skid-ball_indicated line 18
   flightDataMap["/instrumentation/turn-indicator/indicated-turn-rate"] = 0; //turn-indicator line 19
-  flightDataMap["/instrumentation/vertical-speed-indicator/indicated-speed-fpm"] = 0; //vertical-speed-indicator line 20
+  flightDataMap["/instrumentation/vertical-speed-indicator/indicated-speed-fpm"] =
+      0; //vertical-speed-indicator line 20
   flightDataMap["/controls/flight/aileron"] = 0; //flight_aileron line 21
   flightDataMap["/controls/flight/elevator"] = 0; //flight_elevator line 22
   flightDataMap["/controls/flight/rudder"] = 0; //flight_rudder line 23
