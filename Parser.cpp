@@ -20,11 +20,11 @@ Parser::Parser() {
   commandsMap["while"] = new WhileCommand();
   commandsMap["if"] = new IfCommand();
   commandsMap["var"] = new VarCommand();
+  initializeFlightDataMap();
 }
 
 void Parser::parse(vector<string> vct) {
   int index = 0;
-  initializeFlightDataMap();
   while (index < vct.size()) {
     // it is a command from the map
     if (commandsMap.find(vct[index]) != commandsMap.end()) {
@@ -35,8 +35,8 @@ void Parser::parse(vector<string> vct) {
       Command *command = commandsMap.find("var")->second;
       index += command->execute(vct, index);
     }
-    cout << "Parser index ";
-    cout << index << endl;
+//    cout << "Parser index ";
+//    cout << index << endl;
   }
 }
 

@@ -20,6 +20,14 @@ class Var : public Expression {
   string simCommand;
 
  public:
+  Var(string n, double newValue) {
+    name = n;
+    value = newValue;
+    varKind = REGULAR;
+    // if we did not fill that field, the default value is "" (empty)
+    simCommand = "";
+  }
+
   Var(string n, string newSimCommand, int newVarKind) {
     name = n;
     value = 0;
@@ -46,7 +54,7 @@ class Var : public Expression {
   void setValue(double newVal) {
     this->value = newVal;
   }
-  void setSim(string newsim){
+  void setSim(string newsim) {
     this->simCommand = newsim;
   }
 
@@ -59,7 +67,7 @@ class Var : public Expression {
   }
 
   // IN = 1, OUT = 2, REGULAR = 3
-  int getVarKind(){
+  int getVarKind() {
     return this->varKind;
   }
   double calculate() {

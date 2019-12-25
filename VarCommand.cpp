@@ -43,10 +43,15 @@ Expression *VarCommand::createExp(string expIsString) {
       string calcInStr = to_string(calc);
       variableSetting += calcInStr;
       inter->setVariables(variableSetting);
+
+      cout << "setVariables = ";
+      cout << variableSetting << endl;
     }
   }
 
   Expression *newExp = inter->interpret(expIsString);
+  cout << "calculate = ";
+  cout << newExp->calculate() << endl;
   return newExp;
 }
 

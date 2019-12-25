@@ -1,7 +1,6 @@
 //
 // Created by ofir on 18/12/2019.
 //
-
 #ifndef EX3__INTERMATH_H_
 #define EX3__INTERMATH_H_
 #include <cstring>
@@ -13,8 +12,8 @@
 #include "ExpressionHandling.h"
 #include "Var.h"
 #include <map>
-
 class InterMath {
+  int flagNeg = 0; //0-pos 1-neg
  protected:
   map<const string, Var *> varMap;
   //Expression& interpret(string str);
@@ -31,7 +30,6 @@ class InterMath {
       flag = 0;
       c = s[i];
       string num = "";
-
       //check number with more then one digit.
       if (isdigit(s[i])) {
         while (prec(c) == -1 && (c != ")") && (c != "(") && i < length) {
@@ -42,7 +40,6 @@ class InterMath {
         qu.push(num);
         flag = 1;
       }
-
       // check first minus unary expression
       bool flagUnary = false;
       if (((i == 0) && (c == "-")) || ((c == "-") && (s[i - 1] == '('))) {
@@ -55,7 +52,6 @@ class InterMath {
         flagUnary = true;
         flag = 1;
       }
-
       if (prec(c) != (-1) && flagUnary == false) {
         while ((!st.empty()) && ((prec(st.top()) > prec(c)) || ((prec(st.top()) == prec(c))))
             && (st.top() != "(")) {
@@ -86,7 +82,6 @@ class InterMath {
       if (flag == 0) {//check flag if something happend this round
         //variable
         string regCheck = "";
-
         while (regex_match(c, varReg)) {
           regCheck += c;
           i++;
@@ -106,7 +101,7 @@ class InterMath {
   }
   Expression *interpret(string str) {
     queue<string> qu = infixToPostfix(str);
-    stack < Expression * > st; //stack for expressions.
+    stack<Expression *> st; //stack for expressions.
     while (!qu.empty()) {
       //If Binary Expression
       if ((qu.front() != "@") && (qu.front() != "$")) {
@@ -145,13 +140,11 @@ class InterMath {
           if (varMap.find(qu.front()) == varMap.end()) {
             throw ("illegal variable assignment!");
           }
-
           st.push(reinterpret_cast<Expression *const>(this->varMap[qu.front()]));////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           /*
            * I changed that line because it wrote that there is a problem with the casting.
            *
            */
-
           qu.pop();
         }
       }
@@ -179,11 +172,15 @@ class InterMath {
     return exp;
   }
   int checkIfNum(string str) {
+    if(str[0]=='-'){
+      flagNeg=1;
+    }
+
     //1=number;0=notNumber
     int check = 1;
     int sLen = str.length();
     for (int i = 0; i < sLen; i++) {
-      if (!(isdigit(str[i]) || str[i] == '.')) {
+      if (!(isdigit(str[i]) || str[i] == '.' || str[i] == '-')) {
         check = 0;
       }
     }
@@ -199,6 +196,7 @@ class InterMath {
       return -1;
   }
   void setVariables(string var) {
+
     stack<string> temp;
     char *newStr = const_cast<char *>(var.c_str());
     char *token = strtok(newStr, ";");
@@ -213,7 +211,15 @@ class InterMath {
       token = strtok(newStr, "=");
       while (token != NULL) {
         if (checkIfNum(token)) {
+          if (flagNeg == 1) {
+            string str = token;
+            str.erase(std::remove(str.begin(), str.begin() + 1, '-'), str.end());
+          }
           value = stod(token);
+
+          if (flagNeg == 1)
+            value = value * (-1);
+
         } else {
           name = token;
         }
@@ -222,7 +228,6 @@ class InterMath {
         this->varMap[name] = variable;
       }
       temp.pop();
-
     }
   };
   virtual ~InterMath() {};

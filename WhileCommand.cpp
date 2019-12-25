@@ -38,8 +38,8 @@ int WhileCommand::execute(vector<string> lexerVector, int index) {
         tmpIndex += command->execute(lexerVector, index);
         index += tmpIndex;
       }
-      cout << "while index: ";
-      cout << index << endl;
+//      cout << "while index: ";
+//      cout << index << endl;
     }
 
     newLeftExp = v->createExp(leftExp);
