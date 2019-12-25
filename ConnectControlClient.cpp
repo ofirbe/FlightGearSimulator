@@ -17,7 +17,8 @@ int ConnectControlClient::runExucteMethosAsThread(string ipAdress, string portNu
   if (client_socket == -1) {
     //error
     std::cerr << "Could not create a socket" << std::endl;
-    return -1;
+    //return -1;
+    exit(1);
   }
 
   //We need to create a sockaddr obj to hold address of server
@@ -33,7 +34,8 @@ int ConnectControlClient::runExucteMethosAsThread(string ipAdress, string portNu
   int is_connect = connect(client_socket, (struct sockaddr *) &address, sizeof(address));
   if (is_connect == -1) {
     std::cerr << "Could not connect to host server" << std::endl;
-    return -2;
+    //return -2;
+    exit(1);
   } else {
     std::cout << "Client is now connected to server" << std::endl;
   }
@@ -65,4 +67,3 @@ int ConnectControlClient::execute(vector<string> lexerVector, int index) {
   // returning the number of cells to jump in the array
   return 3;
 }
-

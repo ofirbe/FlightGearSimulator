@@ -32,7 +32,7 @@ Expression *VarCommand::createExp(string expIsString) {
         if (flightDataMap.find(simCheck) != flightDataMap.end()) {
           calc = flightDataMap.find(simCheck)->second;
         } else {
-          cout << "Error finding the value in the Bedui Map :: VAR:  ";
+          cout << "Error finding the value in the flight sim map :: VAR:  ";
           cout << flightDataMap.find(simCheck)->first << endl;
           cout << partOfExp << endl;
         }
@@ -122,7 +122,7 @@ int VarCommand::execute(vector<string> lexerVector, int index) {
 
     if (varMap.find(name) != varMap.end()) {
       varMap.find(name)->second->setValue(newExp->calculate());
-      if (varMap.find(name)->second->getVarKind() == 2) { //OUT= push to the queue command+value
+      if (varMap.find(name)->second->getVarKind() == OUT) { //OUT= push to the queue command+value
         string strSim = varMap.find(name)->second->getSim();
         strSim.erase(std::remove(strSim.begin(), strSim.end(), '"'), strSim.end());
         connectControlQueue.push(

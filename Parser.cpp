@@ -31,30 +31,13 @@ void Parser::parse(vector<string> vct) {
       Command *command = commandsMap.find(vct[index])->second;
       index += command->execute(vct, index);
     } else {
-      // the rest of the cases: x = 4
+      // the rest of the cases: for example: x = 4
       Command *command = commandsMap.find("var")->second;
       index += command->execute(vct, index);
     }
     cout << "Parser index ";
     cout << index << endl;
   }
-
-
-//  cout << "--------------------------------------" << endl;
-//  cout << "VarMap" << endl;
-//  cout << "--------------------------------------" << endl;
-//  for (auto x:varMap) {
-//    cout << x.first + " ";
-//    cout << x.second->getValue() << endl;
-//  }
-//
-//  cout << "--------------------------------------" << endl;
-//  cout << "FlightMap" << endl;
-//  cout << "--------------------------------------" << endl;
-//  for (auto x:flightDataMap) {
-//    cout << x.first + " ";
-//    cout << x.second << endl;
-//  }
 }
 
 //initialize the map that contain all the flight data that exist at the xml file. (36 values initialize to 0)
