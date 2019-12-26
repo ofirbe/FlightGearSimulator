@@ -5,6 +5,17 @@
 #include "WhileCommand.h"
 #include "VarCommand.h"
 
+int WhileCommand::countBetweenBrakets(vector<string> lexerVector, int index) {
+  int count = 0;
+
+  while (index < lexerVector.size() && lexerVector[index] != "}") {
+    count++;
+    index++;
+  }
+
+  return (count + 1);
+}
+
 int WhileCommand::execute(vector<string> lexerVector, int index) {
 
   int backUpIndex = index;
@@ -54,5 +65,8 @@ int WhileCommand::execute(vector<string> lexerVector, int index) {
     index = backUpIndex;
   }
 
-  return (returnIndex + 6);
+  if (returnIndex != 0)
+    return (returnIndex + 6);
+  else
+    countBetweenBrakets(lexerVector, index);
 }

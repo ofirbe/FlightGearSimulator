@@ -2,10 +2,21 @@
 // Created by michael on 21/12/2019.
 //
 
-#include "WhileCommand.h"
+#include "IfCommand.h"
 #include "VarCommand.h"
 
-int WhileCommand::execute(vector<string> lexerVector, int index) {
+int IfCommand::countBetweenBrakets(vector<string> lexerVector, int index) {
+  int count = 0;
+
+  while (index < lexerVector.size() && lexerVector[index] != "}") {
+    count++;
+    index++;
+  }
+
+  return (count + 1);
+}
+
+int IfCommand::execute(vector<string> lexerVector, int index) {
 
   int backUpIndex = index;
   int returnIndex = 0;
@@ -54,5 +65,8 @@ int WhileCommand::execute(vector<string> lexerVector, int index) {
     index = backUpIndex;
   }
 
-  return (returnIndex + 6);
+  if (returnIndex != 0)
+    return (returnIndex + 6);
+  else
+    countBetweenBrakets(lexerVector, index);
 }

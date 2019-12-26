@@ -9,6 +9,7 @@
 class IfCommand : public Command {
  public:
   int execute(vector<string> lexerVector, int index);
+  int countBetweenBrakets(vector<string> lexerVector, int index);
 };
 
 #endif //EX3__IFCOMMAND_H_

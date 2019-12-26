@@ -9,6 +9,7 @@
 class WhileCommand : public Command {
  public:
   int execute(vector<string> lexerVector, int index);
+  int countBetweenBrakets(vector<string> lexerVector, int index);
 };
 
 
