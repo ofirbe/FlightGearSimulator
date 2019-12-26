@@ -40,7 +40,6 @@ int ConnectControlClient::runExucteMethosAsThread(string ipAdress, string portNu
     std::cout << "Client is now connected to server" << std::endl;
   }
 
-  // close(client_socket); //closing the socket
   //if here we made a connection so run over the queue and send commands to server
   while (true) {
     while (!connectControlQueue.empty()) {
@@ -58,6 +57,7 @@ int ConnectControlClient::runExucteMethosAsThread(string ipAdress, string portNu
       }
     }
   }
+  close(client_socket); //closing the socket
 }
 int ConnectControlClient::execute(vector<string> lexerVector, int index) {
   thread ConnectControlClientThread
