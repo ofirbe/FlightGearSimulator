@@ -8,7 +8,7 @@
 int WhileCommand::execute(vector<string> lexerVector, int index) {
 
   int backUpIndex = index;
-  int tmpIndex = 0;// return index
+  int returnIndex = 0;
 
   string leftExp = lexerVector[index + 1];
   string oper = lexerVector[index + 2];
@@ -22,24 +22,24 @@ int WhileCommand::execute(vector<string> lexerVector, int index) {
   BooleanExpression *boolExp = new BooleanExpression(newLeftExp, newRightExp, oper);
 
   // running the loop
-  while (boolExp->calculate() == 1) {
+  while (boolExp->calculate()) {
     index += 5;
     // executing the commands in the while loop
     while (index < lexerVector.size() && lexerVector[index] != "}") {
-      tmpIndex = 0;
+      returnIndex = 0;
 
       if (commandsMap.find(lexerVector[index]) != commandsMap.end()) {
         Command *command = commandsMap.find(lexerVector[index])->second;
-        tmpIndex += command->execute(lexerVector, index);
-        index += tmpIndex;
+        returnIndex += command->execute(lexerVector, index);
+        index += returnIndex;
       } else {
         // the rest of the cases: x = 4
         Command *command = commandsMap.find("var")->second;
-        tmpIndex += command->execute(lexerVector, index);
-        index += tmpIndex;
+        returnIndex += command->execute(lexerVector, index);
+        index += returnIndex;
       }
-//      cout << "while index: ";
-//      cout << index << endl;
+      cout << "while index: ";
+      cout << index << endl;
     }
 
     newLeftExp = v->createExp(leftExp);
@@ -51,5 +51,5 @@ int WhileCommand::execute(vector<string> lexerVector, int index) {
     index = backUpIndex;
   }
 
-  return tmpIndex + 6;
+  return (returnIndex + 6);
 }

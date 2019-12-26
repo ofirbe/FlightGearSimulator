@@ -51,8 +51,8 @@ while alt < 1000
 {
 	rudder = (h0-heading)/80
 	aileron = -roll/70
-	Print(roll)
 	elevator = pitch/50
 	Sleep(250)
+	Print(alt)
 }
 Print("done")

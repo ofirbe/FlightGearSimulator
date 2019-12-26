@@ -15,7 +15,7 @@
 class InterMath {
   int flagNeg = 0; //0-pos 1-neg
  protected:
-  map<const string, Var *> varMap;
+  map<const string, Var *> localVarMap;
   //Expression& interpret(string str);
  public:
   InterMath() {};
@@ -137,10 +137,10 @@ class InterMath {
           qu.pop();
         } else {
           //variable
-          if (varMap.find(qu.front()) == varMap.end()) {
+          if (localVarMap.find(qu.front()) == varMap.end()) {
             throw ("illegal variable assignment!");
           }
-          st.push(reinterpret_cast<Expression *const>(this->varMap[qu.front()]));////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          st.push(reinterpret_cast<Expression *const>(this->localVarMap[qu.front()]));////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           /*
            * I changed that line because it wrote that there is a problem with the casting.
            *
@@ -168,23 +168,28 @@ class InterMath {
     Expression *exp = st.top();
     st.pop();
     //clear map
-    this->varMap.clear();
+    this->localVarMap.clear();
     return exp;
   }
   int checkIfNum(string str) {
-    if(str[0]=='-'){
-      flagNeg=1;
+    if (str[0] == '-') {
+      flagNeg = 1;
+      str.erase(str.begin());
     }
 
     //1=number;0=notNumber
     int check = 1;
     int sLen = str.length();
     for (int i = 0; i < sLen; i++) {
-      if (!(isdigit(str[i]) || str[i] == '.' || str[i] == '-')) {
+      if (!(isdigit(str[i]) || str[i] == '.')) {
         check = 0;
       }
     }
-    return check;
+
+    if (sLen == 0)
+      return 0;
+    else
+      return check;
   }
 //Function to return precedence of operators
   int prec(string c) {
@@ -211,11 +216,11 @@ class InterMath {
       token = strtok(newStr, "=");
       while (token != NULL) {
         if (checkIfNum(token)) {
+          string str = token;
           if (flagNeg == 1) {
-            string str = token;
-            str.erase(std::remove(str.begin(), str.begin() + 1, '-'), str.end());
+            str.erase(str.begin());
           }
-          value = stod(token);
+          value = stod(str);
 
           if (flagNeg == 1)
             value = value * (-1);
@@ -225,7 +230,7 @@ class InterMath {
         }
         Var *variable = new Var(name, value, REGULAR);
         token = strtok(NULL, "=");
-        this->varMap[name] = variable;
+        this->localVarMap[name] = variable;
       }
       temp.pop();
     }
