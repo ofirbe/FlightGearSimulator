@@ -24,22 +24,25 @@ int WhileCommand::execute(vector<string> lexerVector, int index) {
   // running the loop
   while (boolExp->calculate()) {
     index += 5;
+    returnIndex = 0;
     // executing the commands in the while loop
     while (index < lexerVector.size() && lexerVector[index] != "}") {
-      returnIndex = 0;
 
       if (commandsMap.find(lexerVector[index]) != commandsMap.end()) {
         Command *command = commandsMap.find(lexerVector[index])->second;
         returnIndex += command->execute(lexerVector, index);
-        index += returnIndex;
+        index += command->execute(lexerVector, index);
       } else {
         // the rest of the cases: x = 4
         Command *command = commandsMap.find("var")->second;
         returnIndex += command->execute(lexerVector, index);
-        index += returnIndex;
+        index += command->execute(lexerVector, index);
       }
       cout << "while index: ";
       cout << index << endl;
+
+      cout << "Return index: ";
+      cout << returnIndex << endl;
     }
 
     newLeftExp = v->createExp(leftExp);

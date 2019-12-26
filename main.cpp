@@ -15,15 +15,16 @@ int main() {
 //  inter->setVariables(str3);
 //  cout << inter->interpret(str1)->calculate() << endl;
 
-//  Parser parser;
-//  parser.parse(vct);
 
-  for (int i = 0; i < vct.size(); i++) {
-    cout << "index=";
-    cout << i;
-    cout << " ";
-    cout << vct[i] << endl;
-  }
+  Parser parser;
+  parser.parse(vct);
+
+//  for (int i = 0; i < vct.size(); i++) {
+//    cout << "index=";
+//    cout << i;
+//    cout << " ";
+//    cout << vct[i] << endl;
+//  }
 
 //  cout << vct[196] << endl;
 //  cout << vct.size() << endl;

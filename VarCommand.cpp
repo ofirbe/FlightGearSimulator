@@ -50,8 +50,11 @@ Expression *VarCommand::createExp(string expIsString) {
   }
 
   Expression *newExp = inter->interpret(expIsString);
-  cout << "calculate = ";
-  cout << newExp->calculate() << endl;
+  if (newExp != nullptr) {
+    cout << "calculate = ";
+    cout << newExp->calculate() << endl;
+  }
+
   return newExp;
 }
 
