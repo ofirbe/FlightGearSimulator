@@ -5,10 +5,10 @@
 #include "WhileCommand.h"
 #include "VarCommand.h"
 
-int IfCommand::execute(vector<string> lexerVector, int index) {
+int WhileCommand::execute(vector<string> lexerVector, int index) {
 
   int backUpIndex = index;
-  int tmpIndex = 0;// return index
+  int returnIndex = 0;
 
   string leftExp = lexerVector[index + 1];
   string oper = lexerVector[index + 2];
@@ -22,24 +22,27 @@ int IfCommand::execute(vector<string> lexerVector, int index) {
   BooleanExpression *boolExp = new BooleanExpression(newLeftExp, newRightExp, oper);
 
   // running the loop
-  if (boolExp->calculate() == 1) {
+  if (boolExp->calculate()) {
     index += 5;
+    returnIndex = 0;
     // executing the commands in the while loop
     while (index < lexerVector.size() && lexerVector[index] != "}") {
-      tmpIndex = 0;
 
       if (commandsMap.find(lexerVector[index]) != commandsMap.end()) {
         Command *command = commandsMap.find(lexerVector[index])->second;
-        tmpIndex += command->execute(lexerVector, index);
-        index += tmpIndex;
+        returnIndex += command->execute(lexerVector, index);
+        index += command->execute(lexerVector, index);
       } else {
         // the rest of the cases: x = 4
         Command *command = commandsMap.find("var")->second;
-        tmpIndex += command->execute(lexerVector, index);
-        index += tmpIndex;
+        returnIndex += command->execute(lexerVector, index);
+        index += command->execute(lexerVector, index);
       }
       cout << "while index: ";
       cout << index << endl;
+
+      cout << "Return index: ";
+      cout << returnIndex << endl;
     }
 
     newLeftExp = v->createExp(leftExp);
@@ -51,5 +54,5 @@ int IfCommand::execute(vector<string> lexerVector, int index) {
     index = backUpIndex;
   }
 
-  return tmpIndex + 6;
+  return (returnIndex + 6);
 }
