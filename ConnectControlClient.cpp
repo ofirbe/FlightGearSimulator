@@ -6,7 +6,12 @@
 #include "Parser.h"
 
 int ConnectControlClient::runExucteMethosAsThread(string ipAdress, string portNum) {
-  int portNumInInt = stoi(portNum);
+
+  // calculating the port number
+  VarCommand *v = new VarCommand();
+  Expression *portExp = v->createExp(portNum);
+  int portNumInInt = portExp->calculate();
+
   string tmp = ipAdress;
   tmp.erase(remove(tmp.begin(), tmp.end(), '"'), tmp.end());
   char localHostAddress[tmp.length() + 1];

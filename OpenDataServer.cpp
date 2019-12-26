@@ -5,7 +5,12 @@
 #include "OpenDataServer.h"
 int client_socket;
 int OpenDataServer::runExucteMethosAsThread(string portNum) {
-  int portNumInInt = stoi(portNum);
+
+  // calculating the port number
+  VarCommand *v = new VarCommand();
+  Expression *portExp = v->createExp(portNum);
+  int portNumInInt = portExp->calculate();
+
   //create socket
   int socketfd = socket(AF_INET, SOCK_STREAM, 0);
   if (socketfd == -1) {
