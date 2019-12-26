@@ -41,6 +41,7 @@ Print(rpm)
 while rpm <= 750
 {
 	Print(rpm)
+	Print(rpm)
 }
 Sleep(5000)
 Print("let's fly")
