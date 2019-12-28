@@ -54,8 +54,9 @@ class Var : public Expression {
   void setValue(double newVal) {
     this->value = newVal;
   }
-  void setSim(string newsim) {
-    this->simCommand = newsim;
+
+  void setSim(string newSim) {
+    this->simCommand = newSim;
   }
 
   string getSim() {

@@ -29,7 +29,7 @@ int WhileCommand::execute(vector<string> lexerVector, int index) {
   Expression *newLeftExp = v->createExp(leftExp);
   Expression *newRightExp = v->createExp(rightExp);
 
-  // creating the bollean expression
+  // creating the boolean expression
   BooleanExpression *boolExp = new BooleanExpression(newLeftExp, newRightExp, oper);
 
   // running the loop
@@ -49,11 +49,11 @@ int WhileCommand::execute(vector<string> lexerVector, int index) {
         returnIndex += command->execute(lexerVector, index);
         index += command->execute(lexerVector, index);
       }
-      cout << "while index: ";
-      cout << index << endl;
-
-      cout << "Return index: ";
-      cout << returnIndex << endl;
+//      cout << "while index: ";
+//      cout << index << endl;
+//
+//      cout << "Return index: ";
+//      cout << returnIndex << endl;
     }
 
     newLeftExp = v->createExp(leftExp);
@@ -68,5 +68,5 @@ int WhileCommand::execute(vector<string> lexerVector, int index) {
   if (returnIndex != 0)
     return (returnIndex + 6);
   else
-    countBetweenBrakets(lexerVector, index);
+    return countBetweenBrakets(lexerVector, index);
 }

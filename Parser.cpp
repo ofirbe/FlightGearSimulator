@@ -35,8 +35,8 @@ void Parser::parse(vector<string> vct) {
       Command *command = commandsMap.find("var")->second;
       index += command->execute(vct, index);
     }
-    cout << "Parser index ";
-    cout << index << endl;
+//    cout << "Parser index ";
+//    cout << index << endl;
   }
 }
 

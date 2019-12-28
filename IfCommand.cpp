@@ -29,11 +29,12 @@ int IfCommand::execute(vector<string> lexerVector, int index) {
   Expression *newLeftExp = v->createExp(leftExp);
   Expression *newRightExp = v->createExp(rightExp);
 
-  // creating the bollean expression
+  // creating the boolean expression
   BooleanExpression *boolExp = new BooleanExpression(newLeftExp, newRightExp, oper);
 
   // running the loop
   if (boolExp->calculate()) {
+
     index += 5;
     returnIndex = 0;
     // executing the commands in the while loop
@@ -68,5 +69,5 @@ int IfCommand::execute(vector<string> lexerVector, int index) {
   if (returnIndex != 0)
     return (returnIndex + 6);
   else
-    countBetweenBrakets(lexerVector, index);
+    return countBetweenBrakets(lexerVector, index);
 }

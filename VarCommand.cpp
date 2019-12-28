@@ -7,6 +7,9 @@
 
 Expression *VarCommand::createExp(string expIsString) {
 
+// deleting spaces from the string
+  expIsString.erase(remove(expIsString.begin(), expIsString.end(), ' '), expIsString.end());
+
   InterMath *inter = new InterMath();
   for (int i = 0; i < expIsString.length(); i++) {
 
@@ -14,7 +17,7 @@ Expression *VarCommand::createExp(string expIsString) {
     string numAsString = "";
 
     // if it is a alphabetic char
-    while (isalpha(expIsString[i]) || isdigit(expIsString[i])) {
+    while (isalpha(expIsString[i]) || isdigit(expIsString[i]) || expIsString[i] == '_') {
       partOfExp += expIsString[i];
       i++;
     }
@@ -35,25 +38,28 @@ Expression *VarCommand::createExp(string expIsString) {
           cout << "Error finding the value in the flight sim map :: VAR:  ";
           cout << flightDataMap.find(simCheck)->first << endl;
           cout << partOfExp << endl;
+
+          calc = varMap.find(partOfExp)->second->calculate();
         }
-      } else {
-        calc = varMap.find(partOfExp)->second->calculate();
       }
+//      else {
+//        calc = varMap.find(partOfExp)->second->calculate();
+//      }
 
       string calcInStr = to_string(calc);
       variableSetting += calcInStr;
       inter->setVariables(variableSetting);
 
-      cout << "setVariables = ";
-      cout << variableSetting << endl;
+//      cout << "setVariables = ";
+//      cout << variableSetting << endl;
     }
   }
 
   Expression *newExp = inter->interpret(expIsString);
-  if (newExp != nullptr) {
-    cout << "calculate = ";
-    cout << newExp->calculate() << endl;
-  }
+//  if (newExp != nullptr) {
+//    cout << "calculate = ";
+//    cout << newExp->calculate() << endl;
+//  }
 
   return newExp;
 }

@@ -114,23 +114,33 @@ class BooleanExpression : public BinaryOperator {
   }
 
   double calculate() {
+
+    double leftValue = expL->calculate();
+    double rightValue = expR->calculate();
+
+    double x1 = leftValue * 1000000;
+    double x2 = rightValue * 1000000;
+
+    double y1 = (int) x1;
+    double y2 = (int) x2;
+
     if (oper == "<") {
-      return expL->calculate() < expR->calculate();
+      return leftValue < rightValue;
     }
     if (oper == ">") {
-      return expL->calculate() > expR->calculate();
+      return leftValue > rightValue;
     }
     if (oper == "<=") {
-      return expL->calculate() <= expR->calculate();
+      return leftValue <= rightValue;
     }
     if (oper == ">=") {
-      return expL->calculate() >= expR->calculate();
+      return leftValue >= rightValue;
     }
     if (oper == "==") {
-      return expL->calculate() == expR->calculate();
+      return (y1 == y2 || (abs(y1 - y2) == 1));
     }
     if (oper == "!=") {
-      return expL->calculate() != expR->calculate();
+      return (!(y1 == y2 || (abs(y1 - y2) == 1)));
     }
   }
 };
