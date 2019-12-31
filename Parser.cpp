@@ -12,6 +12,9 @@ map<string, Command *> commandsMap;
 map<string, double> flightDataMap;
 queue<string> connectControlQueue;
 
+/**
+ * Parser - the constructor of the class. The method inserts values to the commands map.
+ */
 Parser::Parser() {
   commandsMap["connectControlClient"] = new ConnectControlClient();
   commandsMap["openDataServer"] = new OpenDataServer();
@@ -23,6 +26,10 @@ Parser::Parser() {
   initializeFlightDataMap();
 }
 
+/**
+ * parse - the main method that is responsible for the main command loop. It executes the commands in the lexer.
+ * @param: vector<string> lexerVector - the vector that the lexer created from fly.txt.
+ */
 void Parser::parse(vector<string> vct) {
   int index = 0;
   while (index < vct.size()) {
@@ -40,8 +47,10 @@ void Parser::parse(vector<string> vct) {
   }
 }
 
-//initialize the map that contain all the flight data that exist at the xml file. (36 values initialize to 0)
-//we will get the value of all the data from the connection to the flight server.
+/**
+ * execute - the method initializes the map that contain all the flight data that exist at the xml file. (36 values initialized to 0).
+   We will get the value of all the data from the connection to the flight server.
+ */
 void Parser::initializeFlightDataMap() {
   flightDataMap["/instrumentation/airspeed-indicator/indicated-speed-kt"] = 0; //airspeed-indicator line 1
   flightDataMap["/sim/time/warp"] = 0; //time_warp line 2

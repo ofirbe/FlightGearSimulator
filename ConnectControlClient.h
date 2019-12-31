@@ -16,12 +16,9 @@
 #include "Command.h"
 using namespace std;
 
-// the define Port and address will get the information from the lexer.
-#define PORT 5402
-
 class ConnectControlClient : public Command {
  public:
-  int runExucteMethosAsThread(string ipAdress, string portNum);
+  void runExucteMethosAsThread(string ipAdress, string portNum);
   int execute(vector<string> lexerVector, int index);
 };
 

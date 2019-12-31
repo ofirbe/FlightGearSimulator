@@ -5,6 +5,13 @@
 #include "WhileCommand.h"
 #include "VarCommand.h"
 
+/**
+ * countBetweenBrakets - the method counts the number of cells we need to jump at the vector in case
+ * that the whileCommand will not by executed (the condition is false).
+ * @param: vector<string> lexerVector - the vector that the lexer created from fly.txt.
+ * @param: int currentIndex - the current index of the vector.
+ * @return int:  the number of steps we need to jump in the array.
+ */
 int WhileCommand::countBetweenBrakets(vector<string> lexerVector, int index) {
   int count = 0;
 
@@ -16,6 +23,14 @@ int WhileCommand::countBetweenBrakets(vector<string> lexerVector, int index) {
   return (count + 1);
 }
 
+/**
+ * execute - the method executes the while command - executes the commands between '{' and '}' in loop while the
+ * condition she gets is true. Otherwise the command would not be executed. Moreover, it returns the number of steps we
+ * need to jump in the lexer vector, in order to get the next command.
+ * @param: vector<string> lexerVector - the vector that the lexer created from fly.txt.
+ * @param: int currentIndex - the current index of the vector.
+ * @return int:  the number of steps we need to jump in the array.
+ */
 int WhileCommand::execute(vector<string> lexerVector, int index) {
 
   int backUpIndex = index;

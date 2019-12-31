@@ -5,9 +5,15 @@
 #include "VarCommand.h"
 #include "InterMath.h"
 
+/**
+ * execute - the method gets string and turns it into an expression in order we could calculate it in case we need.
+ * Moreover, the method set variables by their values in order to interpret the expression by using Interpreter calss.
+ * @param: string expIsString - the string we want to convert into expression.
+ * @return Expression *:  the number of steps we need to jump in the array.
+ */
 Expression *VarCommand::createExp(string expIsString) {
 
-// deleting spaces from the string
+  // deleting spaces from the string
   expIsString.erase(remove(expIsString.begin(), expIsString.end(), ' '), expIsString.end());
 
   InterMath *inter = new InterMath();
@@ -64,6 +70,14 @@ Expression *VarCommand::createExp(string expIsString) {
   return newExp;
 }
 
+
+/**
+ * execute - the method handles the vars in the text file. It enters the var into the varMap and executes the correct
+ * command by the var sign: = -> <-
+ * @param: vector<string> lexerVector - the vector that the lexer created from fly.txt.
+ * @param: int currentIndex - the current index of the vector.
+ * @return int:  the number of steps we need to jump in the array.
+ */
 int VarCommand::execute(vector<string> lexerVector, int index) {
   int isNewVar = 0;
   Var *newVar;

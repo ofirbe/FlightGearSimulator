@@ -5,7 +5,12 @@
 #include "ConnectControlClient.h"
 #include "Parser.h"
 
-int ConnectControlClient::runExucteMethosAsThread(string ipAdress, string portNum) {
+/**
+ * runExucteMethosAsThread - the method runs the connection (to client) thread by the ip and port it gets.
+ * @param: string ipAdress - the ip address.
+ * @param: int string portNum - the port number.
+ */
+void ConnectControlClient::runExucteMethosAsThread(string ipAdress, string portNum) {
 
   // calculating the port number
   VarCommand *v = new VarCommand();
@@ -62,8 +67,18 @@ int ConnectControlClient::runExucteMethosAsThread(string ipAdress, string portNu
       }
     }
   }
-  close(client_socket); //closing the socket
+  //closing the socket
+  close(client_socket);
 }
+
+/**
+ * execute - the method executes the ConnectControlClient command - connecting to the client and sending it
+ * commands. The method returns the number of steps we need to jump in the lexer
+ * vector, in order to get the next command.
+ * @param: vector<string> lexerVector - the vector that the lexer created from fly.txt.
+ * @param: int currentIndex - the current index of the vector.
+ * @return int:  the number of steps we need to jump in the array.
+ */
 int ConnectControlClient::execute(vector<string> lexerVector, int index) {
   thread ConnectControlClientThread
       (&ConnectControlClient::runExucteMethosAsThread, this, lexerVector[index + 1], lexerVector[index + 2]);

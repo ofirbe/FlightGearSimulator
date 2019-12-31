@@ -4,7 +4,12 @@
 
 #include "OpenDataServer.h"
 int client_socket;
-int OpenDataServer::runExucteMethosAsThread(string portNum) {
+
+/**
+ * runExucteMethosAsThread - the method runs the OpenDataServer (as server) thread by the port it gets.
+ * @param: int string portNum - the port number.
+ */
+void OpenDataServer::runExucteMethosAsThread(string portNum) {
 
   // calculating the port number
   VarCommand *v = new VarCommand();
@@ -76,6 +81,14 @@ int OpenDataServer::runExucteMethosAsThread(string portNum) {
   }
 }
 
+/**
+ * execute - the method executes the OpenDataServer command - open server from the current computer in order
+ * to get status from the simulator. The method returns the number of steps we need to jump in the lexer
+ * vector, in order to get the next command.
+ * @param: vector<string> lexerVector - the vector that the lexer created from fly.txt.
+ * @param: int currentIndex - the current index of the vector.
+ * @return int:  the number of steps we need to jump in the array.
+ */
 int OpenDataServer::execute(vector<string> lexerVector, int index) {
   thread openDataServerThread(&OpenDataServer::runExucteMethosAsThread, this, lexerVector[index + 1]);
   openDataServerThread.detach();
@@ -86,7 +99,12 @@ int OpenDataServer::execute(vector<string> lexerVector, int index) {
   return 2;
 }
 
-//get index (the number of the data from the xml file) and return the corresponding Key(string) at the flightDataMap
+/**
+ * indexToCommandKey - the method gets index (the number of the data from the xml file) and return the corresponding
+ * Key(string) at the flightDataMap
+ * @param: int currentIndex - the current index of the vector.
+ * @return string:  the number of steps we need to jump in the array.
+ */
 string OpenDataServer::indexToCommandKey(int index) {
   switch (index) {
     case 1:return ("/instrumentation/airspeed-indicator/indicated-speed-kt");

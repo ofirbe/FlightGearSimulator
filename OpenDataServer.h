@@ -15,7 +15,7 @@
 #include "Parser.h"
 class OpenDataServer : public Command {
  public:
-  int runExucteMethosAsThread(string portNum);
+  void runExucteMethosAsThread(string portNum);
   int execute(vector<string> lexerVector, int index);
   string indexToCommandKey(int index);
 };
