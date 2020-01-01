@@ -40,7 +40,7 @@ class Lexer {
 
       if (!line.empty()) {
         string currentWord = "";
-        for (int i = 0; i < line.length(); i++) {
+        for (unsigned int i = 0; i < line.length(); i++) {
           //Handle parenthesis
           if (line[i] == '(') {
             if (currentWord != "") {

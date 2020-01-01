@@ -15,7 +15,8 @@
 int WhileCommand::countBetweenBrakets(vector<string> lexerVector, int index) {
   int count = 0;
 
-  while (index < lexerVector.size() && lexerVector[index] != "}") {
+  int vectorSize = lexerVector.size();
+  while (index < vectorSize && lexerVector[index] != "}") {
     count++;
     index++;
   }
@@ -52,7 +53,8 @@ int WhileCommand::execute(vector<string> lexerVector, int index) {
     index += 5;
     returnIndex = 0;
     // executing the commands in the while loop
-    while (index < lexerVector.size() && lexerVector[index] != "}") {
+    int vectorSize = lexerVector.size();
+    while (index < vectorSize && lexerVector[index] != "}") {
 
       if (commandsMap.find(lexerVector[index]) != commandsMap.end()) {
         Command *command = commandsMap.find(lexerVector[index])->second;
