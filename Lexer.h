@@ -15,9 +15,14 @@ using namespace std;
 class Lexer {
 
  public:
+  /**
+ * lexerFunc - the method lexerFunc is charge to create the vector that contain all the words and signs that exists at the fly.txt
+ *the method open the file and read it line by line, separate every line by spaces and expressions and put it at the vectors ceil's.
+ * @return  vector<string> :lexerVector - the vector that we created from fly.txt.
+ */
   vector<string> lexerFunc() {
     int firstCloser = 0;
-    int countCLoser = 0, countOpen =0;
+    int countCLoser = 0, countOpen = 0;
     vector<string> inputVector;
 
     fstream f;
@@ -36,75 +41,58 @@ class Lexer {
       if (!line.empty()) {
         string currentWord = "";
         for (int i = 0; i < line.length(); i++) {
-          ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-          if(line[i]=='('){
-            if(currentWord!=""){
+          //Handle parenthesis
+          if (line[i] == '(') {
+            if (currentWord != "") {
               inputVector.push_back(currentWord);
               i++;
-              currentWord="";
+              currentWord = "";
             }
             countOpen++;
-            firstCloser=1;
-            while(countOpen!=countCLoser){
-              if(line[i]=='('){
-                if(firstCloser==1){
-                  firstCloser=0;
-                }else{
+            firstCloser = 1;
+            while (countOpen != countCLoser) {
+              if (line[i] == '(') {
+                if (firstCloser == 1) {
+                  firstCloser = 0;
+                } else {
                   countOpen++;
                 }
-                currentWord+=line[i];
-                i++;
-              }else if(line[i]==')'){
-                countCLoser++;
-                i++;
-              }else if(line[i]==','){
-                if(currentWord!=""){
-                  inputVector.push_back(currentWord);
-                  i++;
-                  currentWord="";
-                }else{
-                  i++;
-                }
-              }else if (line[i]=='"'){
                 currentWord += line[i];
                 i++;
-                while(line[i]!='"'){
+              } else if (line[i] == ')') {
+                countCLoser++;
+                i++;
+              } else if (line[i] == ',') {
+                if (currentWord != "") {
+                  inputVector.push_back(currentWord);
+                  i++;
+                  currentWord = "";
+                } else {
+                  i++;
+                }
+              } else if (line[i] == '"') {
+                currentWord += line[i];
+                i++;
+                while (line[i] != '"') {
                   currentWord += line[i];
                   i++;
                 }
                 currentWord += line[i];
                 inputVector.push_back(currentWord);
                 i++;
-                currentWord="";
-              }else{
+                currentWord = "";
+              } else {
                 currentWord += line[i];
-                i++;////check if need to erase spaces.5@5@6@5^$%^$%^$%^#%@%^#&^%$&^#7#57$$%^##$^&&$%^&E$%^
+                i++;
               }
 
             }
             if (currentWord != "") {
               inputVector.push_back(currentWord);
               i++;
-              currentWord="";
+              currentWord = "";
             }
           }
-          ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-          //////////////////////
-
-//          if(line[i]=='"'){
-//            currentWord += line[i];
-//            i++;
-//            while(line[i]!='"'){
-//              currentWord += line[i];
-//              i++;
-//            }
-//            currentWord += line[i];
-//            inputVector.push_back(currentWord);
-//            i++;
-//            currentWord="";
-//          }
-
           if (line[i] == '/' && line[i + 1] == '/') {
             break;
           }
@@ -135,11 +123,10 @@ class Lexer {
               i++;
               currentWord = ""; //reset word
 
-              //////////////////////////////////////////////////PLASTER YA AHOSHARMOTA!
               //after operand we want the rest of the line to be one ceil at the lexer array (except {/})
               while (i < line.length()) {
                 if (line[i] != ' ') {
-                  if(line[i] == '{'||line[i]=='}') {
+                  if (line[i] == '{' || line[i] == '}') {
                     if (currentWord != "") {
                       inputVector.push_back(currentWord);
                       currentWord = "";
@@ -147,7 +134,7 @@ class Lexer {
                       inputVector.push_back(currentWord);
                       currentWord = "";
                     }
-                  } else{
+                  } else {
                     currentWord += line[i];
                   }
                 }
@@ -157,9 +144,8 @@ class Lexer {
                 inputVector.push_back(currentWord);
               }
               break;
-              /////////////////////////////////////////////////////
 
-            }else{
+            } else {
               currentWord += line[i];
               //if the last char is part of legal word!
               if ((i + 1) == line.length()) {
@@ -174,7 +160,6 @@ class Lexer {
               inputVector.push_back(currentWord);
 
             }
-//            ///////////////////////
             //reset the current word
             currentWord = "";
           }
@@ -186,7 +171,6 @@ class Lexer {
 
     return inputVector;
   }
-
 
 };
 

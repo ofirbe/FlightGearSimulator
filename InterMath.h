@@ -140,7 +140,7 @@ class InterMath {
           if (localVarMap.find(qu.front()) == varMap.end()) {
             throw ("illegal variable assignment!");
           }
-          st.push(reinterpret_cast<Expression *const>(this->localVarMap[qu.front()]));////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          st.push(reinterpret_cast<Expression *const>(this->localVarMap[qu.front()]));
           /*
            * I changed that line because it wrote that there is a problem with the casting.
            *
