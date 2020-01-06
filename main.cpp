@@ -9,14 +9,5 @@ int main() {
   Parser parser;
   parser.parse(vct);
 
-
-//  for (int i = 0; i < vct.size(); i++) {
-//    cout << "index=";
-//    cout << i;
-//    cout << " ";
-//    cout << vct[i] << endl;
-//  }
-
-
   return 0;
 }

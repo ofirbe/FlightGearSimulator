@@ -53,8 +53,6 @@ int OpenDataServer::runExucteMethosAsThread(string portNum) {
   client_socket = accept(socketfd, (struct sockaddr *) &address,
                          (socklen_t *) &address);
 
-  std::cout << client_socket << std::endl;
-
   if (client_socket == -1) {
     std::cerr << "Error accepting client" << std::endl;
     //return -4;

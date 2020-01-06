@@ -74,9 +74,6 @@ int ConnectControlClient::runExucteMethosAsThread(string ipAdress, string portNu
       if (is_sent == -1) {
         std::cout << command << std::endl;
         std::cout << "Error sending message" << std::endl;
-      } else {
-        std::cout << "message sent to server::  " << std::endl;
-        std::cout << command << std::endl;
       }
     }
   }
