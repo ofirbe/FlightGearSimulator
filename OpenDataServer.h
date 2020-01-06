@@ -14,7 +14,11 @@
 #include <map>
 #include "Parser.h"
 class OpenDataServer : public Command {
+ private:
+  int socketId;
  public:
+  OpenDataServer();
+  ~OpenDataServer();
   void runExucteMethosAsThread(string portNum);
   int execute(vector<string> lexerVector, int index);
   string indexToCommandKey(int index);

@@ -3,27 +3,41 @@
 //
 
 #include "OpenDataServer.h"
-int client_socket;
 
 /**
- * runExucteMethosAsThread - the method runs the OpenDataServer (as server) thread by the port it gets.
- * @param: int string portNum - the port number.
+ * CTOR
  */
-void OpenDataServer::runExucteMethosAsThread(string portNum) {
-
-  // calculating the port number
-  VarCommand *v = new VarCommand();
-  Expression *portExp = v->createExp(portNum);
-  int portNumInInt = portExp->calculate();
-
+OpenDataServer::OpenDataServer() {
   //create socket
-  int socketfd = socket(AF_INET, SOCK_STREAM, 0);
-  if (socketfd == -1) {
+  this->socketId = socket(AF_INET, SOCK_STREAM, 0);
+
+  if (this->socketId == -1) {
     //error
     std::cerr << "Could not create a socket" << std::endl;
     //return -1;
     exit(1);
   }
+}
+
+/**
+ * DTOR
+ */
+OpenDataServer::~OpenDataServer() {
+  close(this->socketId);
+}
+
+/**
+ * runExucteMethosAsThread - the method runs the OpenDataServer (as server) thread by the port it gets.
+ * @param: string portNum - the port number.
+ */
+void OpenDataServer::runExucteMethosAsThread(string portNum) {
+
+  int socketfd = this->socketId;
+
+  // calculating the port number
+  VarCommand *v = new VarCommand();
+  Expression *portExp = v->createExp(portNum);
+  int portNumInInt = portExp->calculate();
 
   //bind socket to IP address
   // we first need to create the sockaddr obj

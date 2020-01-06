@@ -19,6 +19,11 @@ class InterMath {
   //Expression& interpret(string str);
  public:
   InterMath() {};
+  /**
+ * infixToPostfix - the method converts string to queue by the shunting-yard algorithm.
+ * @param: string s - the string we want to convert.
+ * @return queue<string> - queue of infix expression.
+ */
   queue<string> infixToPostfix(string s) {
     stack<string> st;
     queue<string> qu;
@@ -99,6 +104,13 @@ class InterMath {
     }
     return qu;
   }
+
+  /**
+    * interpret - the method interpret the string it gets by using the infixToPostfix method and return expreesion
+    * accordingly.
+    * @param: string str - the string we want to convert.
+    * @return Expression* - the expression.
+    */
   Expression *interpret(string str) {
     queue<string> qu = infixToPostfix(str);
     stack<Expression *> st; //stack for expressions.
@@ -171,13 +183,18 @@ class InterMath {
     this->localVarMap.clear();
     return exp;
   }
+
+  /**
+  * checkIfNum - the method checks if the string it gets is a valid number.
+  * @param: string str - the string we want to check.
+  * @return int - 1 if the string is a number and 0 otherwise.
+  */
   int checkIfNum(string str) {
     if (str[0] == '-') {
       flagNeg = 1;
       str.erase(str.begin());
     }
 
-    //1=number;0=notNumber
     int check = 1;
     int sLen = str.length();
     for (int i = 0; i < sLen; i++) {
@@ -191,7 +208,12 @@ class InterMath {
     else
       return check;
   }
-//Function to return precedence of operators
+
+    /**
+  * prec -the methods returns precedence of operators.
+  * @param: string c - the string we want to check.
+  * @return int - 1 2 and (-1) by the precedence of operators.
+  */
   int prec(string c) {
     if (c == "*" || c == "/")
       return 2;
@@ -200,8 +222,13 @@ class InterMath {
     else
       return -1;
   }
-  void setVariables(string var) {
 
+    /**
+  * setVariables - the method get string by the defition of "x=2;y=3..." and set the variables map of the interpreter
+  * so the name and the value of the variable are according to the string.
+  * @param: string var - the string we want to check.
+  */
+  void setVariables(string var) {
     stack<string> temp;
     char *newStr = const_cast<char *>(var.c_str());
     char *token = strtok(newStr, ";");

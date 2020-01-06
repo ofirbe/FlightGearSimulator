@@ -17,7 +17,11 @@
 using namespace std;
 
 class ConnectControlClient : public Command {
+ private:
+  int socketId;
  public:
+  ConnectControlClient();
+  ~ConnectControlClient();
   void runExucteMethosAsThread(string ipAdress, string portNum);
   int execute(vector<string> lexerVector, int index);
 };

@@ -6,11 +6,35 @@
 #include "Parser.h"
 
 /**
+ * CTOR
+ */
+ConnectControlClient::ConnectControlClient() {
+  //create socket
+  int client_socket = socket(AF_INET, SOCK_STREAM, 0);
+  if (client_socket == -1) {
+    //error
+    std::cerr << "Could not create a socket" << std::endl;
+    //return -1;
+    exit(1);
+  }
+  this->socketId = client_socket;
+}
+
+/**
+ * DTOR
+ */
+ConnectControlClient::~ConnectControlClient() {
+  close(this->socketId);
+}
+
+/**
  * runExucteMethosAsThread - the method runs the connection (to client) thread by the ip and port it gets.
  * @param: string ipAdress - the ip address.
- * @param: int string portNum - the port number.
+ * @param: string portNum - the port number.
  */
 void ConnectControlClient::runExucteMethosAsThread(string ipAdress, string portNum) {
+
+  int client_socket = this->socketId;
 
   // calculating the port number
   VarCommand *v = new VarCommand();
@@ -21,15 +45,6 @@ void ConnectControlClient::runExucteMethosAsThread(string ipAdress, string portN
   tmp.erase(remove(tmp.begin(), tmp.end(), '"'), tmp.end());
   char localHostAddress[tmp.length() + 1];
   strcpy(localHostAddress, tmp.c_str());
-
-  //create socket
-  int client_socket = socket(AF_INET, SOCK_STREAM, 0);
-  if (client_socket == -1) {
-    //error
-    std::cerr << "Could not create a socket" << std::endl;
-    //return -1;
-    exit(1);
-  }
 
   //We need to create a sockaddr obj to hold address of server
   sockaddr_in address; //in means IP4
