@@ -1,5 +1,5 @@
 //
-// Created by michael on 22/12/2019.
+// Created by ofir on 22/12/2019.
 //
 
 #include "ConnectControlClient.h"
@@ -17,14 +17,14 @@ ConnectControlClient::ConnectControlClient() {
     //return -1;
     exit(1);
   }
-  this->socketId = client_socket;
+  this->client_socket = client_socket;
 }
 
 /**
  * DTOR
  */
 ConnectControlClient::~ConnectControlClient() {
-  close(this->socketId);
+  close(this->client_socket); //closing the socket
 }
 
 /**
@@ -32,9 +32,7 @@ ConnectControlClient::~ConnectControlClient() {
  * @param: string ipAdress - the ip address.
  * @param: string portNum - the port number.
  */
-void ConnectControlClient::runExucteMethosAsThread(string ipAdress, string portNum) {
-
-  int client_socket = this->socketId;
+int ConnectControlClient::runExucteMethosAsThread(string ipAdress, string portNum) {
 
   // calculating the port number
   VarCommand *v = new VarCommand();
@@ -82,10 +80,7 @@ void ConnectControlClient::runExucteMethosAsThread(string ipAdress, string portN
       }
     }
   }
-  //closing the socket
-  close(client_socket);
 }
-
 /**
  * execute - the method executes the ConnectControlClient command - connecting to the client and sending it
  * commands. The method returns the number of steps we need to jump in the lexer
