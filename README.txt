@@ -1,11 +1,11 @@
-# FlightGearSimulator
+##Flight Gear Simulator
 
 Our goal is to flight the plane by sending commands to the simulator.
 How can we do that? by dividing the work into two different parts that are running simultaneously:
 1. First of all, the simulator should connect to the server as client, and  send its current values that are describing the flight status.
 2. Secondly, the program should connect as a client to the simulator server, and send the instrcution commands in order to flight the plane.
 
-Privious Preparation
+##Privious Preparation
 
 First you'll need to install [flight gear](https://www.flightgear.org/)
 
@@ -17,17 +17,22 @@ In addition you'll need to have a text file of commands and a xml file to put in
 After you have put the xml file in protocol, you can run the program on the command line with an argument which is the fly.txt.
 Then you'll need to press fly on the simulator and after 2 minutes the flight will begin. 
 
+## Running
 
-Versions
+Use the following command to compile, then run a.out (provide txt file name as argument) :
+g++ -std=c++14 main.cpp *.cpp  -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -o a.out -pthread
+
+
+##Versions
 
 We used [Github](https://github.com/ofirbe/FlightGearSimulator.git) for version control.
 
 
-IDE
+##IDE
 
 Clion - Ide by JetBrains
 
-Authors
+##Authors
 
 - Michael Ternovsky
 - Ofir Ben Ezra
