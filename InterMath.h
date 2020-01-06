@@ -1,6 +1,7 @@
 //
-// Created by ofir on 18/12/2019.
+// Created by michael on 18/12/2019.
 //
+
 #ifndef EX3__INTERMATH_H_
 #define EX3__INTERMATH_H_
 #include <cstring>
